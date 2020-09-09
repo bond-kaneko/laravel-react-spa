@@ -8,4 +8,6 @@
 
 `$ npm run watch`
 
+`$ cp .env.dev .env`
+
 `$ php artisan migrate --seed`
