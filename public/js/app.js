@@ -65790,8 +65790,6 @@ __webpack_require__(/*! ./bootstrap */ "./resources/js/bootstrap.js");
  * the page. Then, you may begin adding components to this application
  * or customize the JavaScript scaffolding to fit your unique needs.
  */
-// require('./components/Posts');
-// require('./components/PostForm');
 
 
 __webpack_require__(/*! ./components/App */ "./resources/js/components/App.js");
@@ -66146,11 +66144,9 @@ var Posts = /*#__PURE__*/function (_Component) {
   _createClass(Posts, [{
     key: "render",
     value: function render() {
-      return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
-        className: "container"
-      }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("ul", null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("li", {
+      return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("li", {
         key: this.props.post.id
-      }, this.props.post.name, ": ", this.props.post.content)));
+      }, this.props.post.name, ": ", this.props.post.content, " ", /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("button", null, "\u524A\u9664")));
     }
   }]);
 
