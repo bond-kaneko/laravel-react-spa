@@ -65790,11 +65790,11 @@ __webpack_require__(/*! ./bootstrap */ "./resources/js/bootstrap.js");
  * the page. Then, you may begin adding components to this application
  * or customize the JavaScript scaffolding to fit your unique needs.
  */
+// require('./components/Posts');
+// require('./components/PostForm');
 
 
-__webpack_require__(/*! ./components/Posts */ "./resources/js/components/Posts.js");
-
-__webpack_require__(/*! ./components/PostForm */ "./resources/js/components/PostForm.js");
+__webpack_require__(/*! ./components/App */ "./resources/js/components/App.js");
 
 /***/ }),
 
@@ -65840,6 +65840,137 @@ window.axios.defaults.headers.common['X-Requested-With'] = 'XMLHttpRequest';
 //     cluster: process.env.MIX_PUSHER_APP_CLUSTER,
 //     forceTLS: true
 // });
+
+/***/ }),
+
+/***/ "./resources/js/components/App.js":
+/*!****************************************!*\
+  !*** ./resources/js/components/App.js ***!
+  \****************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "default", function() { return App; });
+/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! react */ "./node_modules/react/index.js");
+/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(react__WEBPACK_IMPORTED_MODULE_0__);
+/* harmony import */ var react_dom__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! react-dom */ "./node_modules/react-dom/index.js");
+/* harmony import */ var react_dom__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(react_dom__WEBPACK_IMPORTED_MODULE_1__);
+/* harmony import */ var _Posts_js__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./Posts.js */ "./resources/js/components/Posts.js");
+/* harmony import */ var _PostForm_js__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./PostForm.js */ "./resources/js/components/PostForm.js");
+function _typeof(obj) { "@babel/helpers - typeof"; if (typeof Symbol === "function" && typeof Symbol.iterator === "symbol") { _typeof = function _typeof(obj) { return typeof obj; }; } else { _typeof = function _typeof(obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }; } return _typeof(obj); }
+
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+function _defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } }
+
+function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _defineProperties(Constructor.prototype, protoProps); if (staticProps) _defineProperties(Constructor, staticProps); return Constructor; }
+
+function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function"); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, writable: true, configurable: true } }); if (superClass) _setPrototypeOf(subClass, superClass); }
+
+function _setPrototypeOf(o, p) { _setPrototypeOf = Object.setPrototypeOf || function _setPrototypeOf(o, p) { o.__proto__ = p; return o; }; return _setPrototypeOf(o, p); }
+
+function _createSuper(Derived) { var hasNativeReflectConstruct = _isNativeReflectConstruct(); return function _createSuperInternal() { var Super = _getPrototypeOf(Derived), result; if (hasNativeReflectConstruct) { var NewTarget = _getPrototypeOf(this).constructor; result = Reflect.construct(Super, arguments, NewTarget); } else { result = Super.apply(this, arguments); } return _possibleConstructorReturn(this, result); }; }
+
+function _possibleConstructorReturn(self, call) { if (call && (_typeof(call) === "object" || typeof call === "function")) { return call; } return _assertThisInitialized(self); }
+
+function _assertThisInitialized(self) { if (self === void 0) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return self; }
+
+function _isNativeReflectConstruct() { if (typeof Reflect === "undefined" || !Reflect.construct) return false; if (Reflect.construct.sham) return false; if (typeof Proxy === "function") return true; try { Date.prototype.toString.call(Reflect.construct(Date, [], function () {})); return true; } catch (e) { return false; } }
+
+function _getPrototypeOf(o) { _getPrototypeOf = Object.setPrototypeOf ? Object.getPrototypeOf : function _getPrototypeOf(o) { return o.__proto__ || Object.getPrototypeOf(o); }; return _getPrototypeOf(o); }
+
+
+
+
+
+
+var App = /*#__PURE__*/function (_Component) {
+  _inherits(App, _Component);
+
+  var _super = _createSuper(App);
+
+  function App() {
+    var _this;
+
+    _classCallCheck(this, App);
+
+    _this = _super.call(this);
+    _this.state = {
+      posts: [],
+      newPost: {
+        name: '',
+        content: ''
+      }
+    };
+    _this.addPost = _this.addPost.bind(_assertThisInitialized(_this));
+    return _this;
+  }
+
+  _createClass(App, [{
+    key: "componentDidMount",
+    value: function componentDidMount() {
+      var _this2 = this;
+
+      axios.get('/api/post').then(function (response) {
+        _this2.setState({
+          posts: response.data
+        });
+      })["catch"](function () {
+        console.log('通信に失敗しました');
+      });
+    }
+  }, {
+    key: "addPost",
+    value: function addPost(e, newPost) {
+      var _this3 = this;
+
+      e.preventDefault(); // 記事作成リクエスト
+
+      axios.post('/api/post/add', {
+        'new_post': newPost
+      }).then(function (response) {
+        _this3.setState({
+          posts: _this3.state.posts.concat({
+            id: response['data']['id'],
+            name: response['data']['name'],
+            content: response['data']['content']
+          })
+        });
+
+        _this3.setState({
+          newPost: {
+            name: '',
+            content: ''
+          }
+        });
+      })["catch"](function () {
+        console.log('通信に失敗しました');
+      });
+    }
+  }, {
+    key: "render",
+    value: function render() {
+      return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_PostForm_js__WEBPACK_IMPORTED_MODULE_3__["default"], {
+        addPost: this.addPost
+      }), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("ul", null, this.state.posts.map(function (post) {
+        return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_Posts_js__WEBPACK_IMPORTED_MODULE_2__["default"], {
+          key: post.id,
+          post: post
+        });
+      })));
+    }
+  }]);
+
+  return App;
+}(react__WEBPACK_IMPORTED_MODULE_0__["Component"]);
+
+
+
+if (document.getElementById('app')) {
+  react_dom__WEBPACK_IMPORTED_MODULE_1___default.a.render( /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(App, null), document.getElementById('app'));
+}
 
 /***/ }),
 
@@ -65890,53 +66021,63 @@ var PostForm = /*#__PURE__*/function (_Component) {
 
   var _super = _createSuper(PostForm);
 
-  function PostForm() {
+  function PostForm(props) {
     var _this;
 
     _classCallCheck(this, PostForm);
 
-    _this = _super.call(this);
+    _this = _super.call(this, props);
     _this.state = {
-      post: {
+      newPost: {
         name: '',
         content: ''
       }
     };
-    _this.addPost = _this.addPost.bind(_assertThisInitialized(_this));
+    _this.handleNameInput = _this.handleNameInput.bind(_assertThisInitialized(_this));
+    _this.handleContentInput = _this.handleContentInput.bind(_assertThisInitialized(_this));
     return _this;
   }
 
   _createClass(PostForm, [{
-    key: "addPost",
-    value: function addPost(e) {
-      var _this2 = this;
-
-      e.preventDefault(); // TODO name, contentを更新
-      // 記事作成リクエスト
-
-      axios__WEBPACK_IMPORTED_MODULE_2___default.a.post('/api/post/add').then(function (response) {
-        _this2.setState({
-          posts: response.data
-        });
-
-        console.log('記事作成に成功しました');
-      })["catch"](function () {
-        console.log('通信に失敗しました');
+    key: "handleNameInput",
+    value: function handleNameInput(e) {
+      var newPost = this.state.newPost;
+      newPost.name = e.target.value;
+      this.setState({
+        newPost: newPost
+      });
+    }
+  }, {
+    key: "handleContentInput",
+    value: function handleContentInput(e) {
+      var newPost = this.state.newPost;
+      newPost.content = e.target.value;
+      this.setState({
+        newPost: newPost
       });
     }
   }, {
     key: "render",
     value: function render() {
-      var _this3 = this;
+      var _this2 = this;
 
       return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("form", {
         onSubmit: function onSubmit(e) {
-          return _this3.addPost(e);
+          return _this2.props.addPost(e, _this2.state.newPost);
         }
-      }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("label", null, "\u8A18\u4E8B\u540D:"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("input", {
+      }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("label", null, "\u8A18\u4E8B\u540D:"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("input", {
         type: "text",
-        id: "name-form"
-      }), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("button", {
+        id: "name-form",
+        onChange: function onChange(e) {
+          return _this2.handleNameInput(e);
+        }
+      })), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("label", null, "\u672C\u6587:"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("input", {
+        type: "text",
+        id: "content-form",
+        onChange: function onChange(e) {
+          return _this2.handleContentInput(e);
+        }
+      })), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("button", {
         type: "submit"
       }, "\u4F5C\u6210")));
     }
@@ -65946,10 +66087,6 @@ var PostForm = /*#__PURE__*/function (_Component) {
 }(react__WEBPACK_IMPORTED_MODULE_0__["Component"]);
 
 
-
-if (document.getElementById('post-form')) {
-  react_dom__WEBPACK_IMPORTED_MODULE_1___default.a.render( /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(PostForm, null), document.getElementById('post-form'));
-}
 
 /***/ }),
 
@@ -66001,45 +66138,19 @@ var Posts = /*#__PURE__*/function (_Component) {
   var _super = _createSuper(Posts);
 
   function Posts() {
-    var _this;
-
     _classCallCheck(this, Posts);
 
-    _this = _super.call(this);
-    _this.state = {
-      posts: []
-    };
-    return _this;
+    return _super.apply(this, arguments);
   }
 
   _createClass(Posts, [{
-    key: "componentDidMount",
-    value: function componentDidMount() {
-      var _this2 = this;
-
-      axios__WEBPACK_IMPORTED_MODULE_2___default.a.get('/api/post').then(function (response) {
-        _this2.setState({
-          posts: response.data
-        });
-      })["catch"](function () {
-        console.log('通信に失敗しました');
-      });
-    }
-  }, {
-    key: "renderPosts",
-    value: function renderPosts() {
-      return this.state.posts.map(function (post) {
-        return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("li", {
-          key: post.id
-        }, post.name, ": ", post.content);
-      });
-    }
-  }, {
     key: "render",
     value: function render() {
       return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
         className: "container"
-      }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("ul", null, this.renderPosts()));
+      }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("ul", null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("li", {
+        key: this.props.post.id
+      }, this.props.post.name, ": ", this.props.post.content)));
     }
   }]);
 
@@ -66047,10 +66158,6 @@ var Posts = /*#__PURE__*/function (_Component) {
 }(react__WEBPACK_IMPORTED_MODULE_0__["Component"]);
 
 
-
-if (document.getElementById('posts')) {
-  react_dom__WEBPACK_IMPORTED_MODULE_1___default.a.render( /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(Posts, null), document.getElementById('posts'));
-}
 
 /***/ }),
 

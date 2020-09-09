@@ -3,50 +3,53 @@ import ReactDOM from 'react-dom';
 import axios from 'axios';
 
 export default class PostForm extends Component {
-    constructor() {
-        super()
-
+    constructor(props) {
+        super(props)
         this.state = {
-            post: {
-                name: '',
-                content: '',
-            }
+            newPost: {name: '', content: ''}
         }
 
-        this.addPost = this.addPost.bind(this)
+        this.handleNameInput = this.handleNameInput.bind(this)
+        this.handleContentInput = this.handleContentInput.bind(this)
     }
 
-    addPost(e) {
-        e.preventDefault();
+    handleNameInput(e) {
+        const newPost = this.state.newPost
+        newPost.name = e.target.value
 
-        // TODO name, contentを更新
+        this.setState(
+            {
+                newPost: newPost
+            }
+        )
+    }
+    handleContentInput(e) {
+        const newPost = this.state.newPost
+        newPost.content = e.target.value
 
-        // 記事作成リクエスト
-        axios
-        .post('/api/post/add')
-        .then(response => {
-            this.setState({posts: response.data});
-            console.log('記事作成に成功しました');
-        })
-        .catch(() => {
-            console.log('通信に失敗しました');
-        });
+        this.setState(
+            {
+                newPost: newPost
+            }
+        )
     }
 
     render() {
         return (
             <div>
-                <form onSubmit={e => this.addPost(e)}>
-                    <label>記事名:</label>
-                    <input type="text" id="name-form"></input>
+                <form onSubmit={e => this.props.addPost(e, this.state.newPost)}>
+                    <div>
+                        <label>記事名:</label>
+                        <input type="text" id="name-form" onChange={e => this.handleNameInput(e)}></input>
+                    </div>
+                    <div>
+                    <label>本文:</label>
+                        <input type="text" id="content-form" onChange={e => this.handleContentInput(e)}></input>
+                    </div>
 
                     <button type="submit">作成</button>
                 </form>
             </div>
         );
     }
-}
-
-if (document.getElementById('post-form')) {
-    ReactDOM.render(<PostForm />, document.getElementById('post-form'));
 }
