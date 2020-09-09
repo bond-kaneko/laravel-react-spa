@@ -64,7 +64,7 @@
         </style>
     </head>
     <body>
-        <div id="example"></div>
+        <div id="posts"></div>
         <script src="{{mix('js/app.js')}}" ></script>
     </body>
 </html>
