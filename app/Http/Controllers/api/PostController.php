@@ -17,12 +17,16 @@ class PostController extends Controller
 
     public function add(Request $request)
     {
-        Log::info($request);
         $post = new Post;
         $post->name = $request['new_post']['name'];
         $post->content = $request['new_post']['content'];
         $post->save();
 
         return response()->json($post, 200);
+    }
+
+    public function delete(Request $request)
+    {
+        return response()->json($request, 200);
     }
 }

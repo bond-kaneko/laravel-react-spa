@@ -16,6 +16,7 @@ export default class App extends Component {
         }
 
         this.addPost = this.addPost.bind(this)
+        this.deletePost = this.deletePost.bind(this)
     }
 
     componentDidMount() {
@@ -48,13 +49,25 @@ export default class App extends Component {
             });
     }
 
+    deletePost(id) {
+        axios
+            .post('/api/post/delete', {'post_id': id})
+            .then(response => {
+                console.log(response)
+            })
+            .catch(() => {
+                console.log('通信に失敗しました');
+            });
+        // this.state.posts.setState(this.state.posts.filter(post => post.id !== id))
+    }
+
     render() {
         return (
             <div>
                 <PostForm addPost={this.addPost}></PostForm>
                 <ul>
                     {this.state.posts.map(post => (
-                        <Posts key={post.id} post={post}></Posts>
+                        <Posts key={post.id} post={post} deletePost={this.deletePost}></Posts>
                     ))}
                 </ul>
             </div>

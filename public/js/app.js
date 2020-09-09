@@ -65903,6 +65903,7 @@ var App = /*#__PURE__*/function (_Component) {
       }
     };
     _this.addPost = _this.addPost.bind(_assertThisInitialized(_this));
+    _this.deletePost = _this.deletePost.bind(_assertThisInitialized(_this));
     return _this;
   }
 
@@ -65948,14 +65949,28 @@ var App = /*#__PURE__*/function (_Component) {
       });
     }
   }, {
+    key: "deletePost",
+    value: function deletePost(id) {
+      axios.post('/api/post/delete', {
+        'post_id': id
+      }).then(function (response) {
+        console.log(response);
+      })["catch"](function () {
+        console.log('通信に失敗しました');
+      }); // this.state.posts.setState(this.state.posts.filter(post => post.id !== id))
+    }
+  }, {
     key: "render",
     value: function render() {
+      var _this4 = this;
+
       return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_PostForm_js__WEBPACK_IMPORTED_MODULE_3__["default"], {
         addPost: this.addPost
       }), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("ul", null, this.state.posts.map(function (post) {
         return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_Posts_js__WEBPACK_IMPORTED_MODULE_2__["default"], {
           key: post.id,
-          post: post
+          post: post,
+          deletePost: _this4.deletePost
         });
       })));
     }
@@ -66144,9 +66159,15 @@ var Posts = /*#__PURE__*/function (_Component) {
   _createClass(Posts, [{
     key: "render",
     value: function render() {
+      var _this = this;
+
       return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("li", {
         key: this.props.post.id
-      }, this.props.post.name, ": ", this.props.post.content, " ", /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("button", null, "\u524A\u9664")));
+      }, this.props.post.name, ": ", this.props.post.content, " ", /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("button", {
+        onClick: function onClick() {
+          return _this.props.deletePost(_this.props.post.id);
+        }
+      }, "\u524A\u9664")));
     }
   }]);
 
