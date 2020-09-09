@@ -65,8 +65,6 @@
     </head>
     <body>
         <div id="app"></div>
-        <!-- <div id="post-form"></div>
-        <div id="posts"></div> -->
         <script src="{{mix('js/app.js')}}" ></script>
     </body>
 </html>

@@ -12,6 +12,4 @@ require('./bootstrap');
  * or customize the JavaScript scaffolding to fit your unique needs.
  */
 
-// require('./components/Posts');
-// require('./components/PostForm');
 require('./components/App');
