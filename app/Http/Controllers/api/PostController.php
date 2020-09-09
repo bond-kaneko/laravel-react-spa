@@ -13,4 +13,11 @@ class PostController extends Controller
         $posts = Post::all();   
         return response()->json($posts, 200);
     }
+
+    public function add()
+    {
+        // TODO 保存処理
+        $posts = Post::all();   
+        return response()->json($posts, 200);
+    }
 }
