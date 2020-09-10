@@ -18,8 +18,25 @@ Route::middleware('auth:api')->get('/user', function (Request $request) {
     return $request->user();
 });
 
-Route::group(['middleware' => ['api']], function() {
-    Route::resource('post' , 'api\PostController');
-    Route::post('post/add', 'api\PostController@add');
-    Route::post('post/delete', 'api\PostController@delete');
+// Route::group(['middleware' => ['api']], function() {
+//     Route::resource('post' , 'api\PostController');
+//     Route::post('post/add', 'api\PostController@add');
+//     Route::post('post/delete', 'api\PostController@delete');
+// });
+
+Route::group([
+    'middleware' => 'api',
+    'prefix' => 'auth'
+], function ($router) {
+    Route::post('register', 'AuthController@register');
+    Route::post('login', 'AuthController@login');
+    Route::post('logout', 'AuthController@logout');
+
+    Route::get('post', 'api\PostController@index');
+    // Route::post('post', 'api\PostController@index');
+
 });
+
+// Route::group(["middleware" => "auth:api"], function () {
+//     Route::get("post", "api\PostController@index");
+// });
