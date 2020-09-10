@@ -65951,18 +65951,25 @@ var App = /*#__PURE__*/function (_Component) {
   }, {
     key: "deletePost",
     value: function deletePost(id) {
+      var _this4 = this;
+
       axios.post('/api/post/delete', {
         'post_id': id
       }).then(function (response) {
-        console.log(response);
-      })["catch"](function () {
+        _this4.setState({
+          posts: _this4.state.posts.filter(function (post) {
+            return post.id !== response['data']['id'];
+          })
+        });
+      })["catch"](function (e) {
         console.log('通信に失敗しました');
-      }); // this.state.posts.setState(this.state.posts.filter(post => post.id !== id))
+        console.log(e);
+      });
     }
   }, {
     key: "render",
     value: function render() {
-      var _this4 = this;
+      var _this5 = this;
 
       return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_PostForm_js__WEBPACK_IMPORTED_MODULE_3__["default"], {
         addPost: this.addPost
@@ -65970,7 +65977,7 @@ var App = /*#__PURE__*/function (_Component) {
         return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_Posts_js__WEBPACK_IMPORTED_MODULE_2__["default"], {
           key: post.id,
           post: post,
-          deletePost: _this4.deletePost
+          deletePost: _this5.deletePost
         });
       })));
     }

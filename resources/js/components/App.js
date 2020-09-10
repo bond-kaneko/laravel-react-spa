@@ -53,12 +53,12 @@ export default class App extends Component {
         axios
             .post('/api/post/delete', {'post_id': id})
             .then(response => {
-                console.log(response)
+                this.setState({posts: this.state.posts.filter(post => post.id !== response['data']['id'])})
             })
-            .catch(() => {
+            .catch((e) => {
                 console.log('通信に失敗しました');
+                console.log(e);
             });
-        // this.state.posts.setState(this.state.posts.filter(post => post.id !== id))
     }
 
     render() {
