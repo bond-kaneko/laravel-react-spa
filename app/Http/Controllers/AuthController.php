@@ -32,6 +32,15 @@ class AuthController extends Controller
         return $this->publishToken($request);
     }
 
+    public function logout(Request $request){
+        Auth::guard('api')->logout();
+
+        return response()->json([
+            'status' => 'success',
+            'message' => 'logout',
+        ], 200);
+    }
+
     protected function publishToken($request) {
         $token = auth('api')->attempt(['email' => $request->email, 'password' => $request->password]);
         return $this->respondWithToken($token);
